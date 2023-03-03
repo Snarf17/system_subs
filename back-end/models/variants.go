@@ -4,19 +4,19 @@ import "time"
 
 type Variants struct {
 	ID                 int
-	Name               string
-	SubscribePeriodDay time.Time
+	Name               string `json:"name" gorm:"type: varchar(255)"`
+	SubscribePeriodDay int
 	Price              int
-	Description        string
+	Description        string `json:"description" gorm:"type: text(255)"`
 	CreatedAt          time.Time
 	UpdatedAt          time.Time
 }
 
 type VariantResponse struct {
-	ID                 int
-	Name               string
-	SubscribePeriodDay time.Time
-	Description        string
+	ID                 int    `json:"id"`
+	Name               string `json:"name"`
+	SubscribePeriodDay int    `json:"subscribe_period_day"`
+	Description        string `json:"desc"`
 }
 
 func (VariantResponse) TableName() string {
