@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 	"system-subscribe/dto"
@@ -22,6 +21,7 @@ func HandleCompany(CompaniesRepository repositories.CompaniesRepository) *handle
 	return &handlerCompany{CompaniesRepository}
 }
 
+// Show All Compnies
 func (h *handlerCompany) ShowCompanies(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
@@ -35,6 +35,8 @@ func (h *handlerCompany) ShowCompanies(w http.ResponseWriter, r *http.Request) {
 	response := dto.SuccessResult{Code: http.StatusOK, Data: company}
 	json.NewEncoder(w).Encode(response)
 }
+
+// Show Company By ID
 func (h *handlerCompany) GetCompaniesId(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
@@ -51,18 +53,15 @@ func (h *handlerCompany) GetCompaniesId(w http.ResponseWriter, r *http.Request) 
 	json.NewEncoder(w).Encode(response)
 }
 
+// Create Companies
 func (h *handlerCompany) CreateCompanies(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	date := time.Now()
 	future := date.AddDate(0, 0, 30)
-
-	fmt.Println(future)
 	user_id, _ := strconv.Atoi(r.FormValue("user_id"))
 	variant_id, _ := strconv.Atoi(r.FormValue("variant_id"))
-	// expiredDate, _ := time.Parse(futureFormatted, future)
 
-	// fmt.Println(expiredDate)
 	data := models.Companies{
 		UserId:      user_id,
 		Name:        r.FormValue("name"),
@@ -101,6 +100,8 @@ func (h *handlerCompany) CreateCompanies(w http.ResponseWriter, r *http.Request)
 	response := dto.SuccessResult{Code: http.StatusOK, Data: getId}
 	json.NewEncoder(w).Encode(response)
 }
+
+// Update Companies
 func (h *handlerCompany) UpdateCompanies(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 

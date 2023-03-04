@@ -2,6 +2,7 @@ package routes
 
 import (
 	"system-subscribe/handlers"
+	"system-subscribe/pkg/middleware"
 	"system-subscribe/pkg/mysql"
 	"system-subscribe/repositories"
 
@@ -15,5 +16,5 @@ func CompaniesRoute(r *mux.Router) {
 	r.HandleFunc("/companies", h.ShowCompanies).Methods("GET")
 	r.HandleFunc("/companies/{id}", h.GetCompaniesId).Methods("GET")
 	r.HandleFunc("/subscribes/{id}", h.UpdateCompanies).Methods("PATCH")
-	r.HandleFunc("/createcompanies", h.CreateCompanies).Methods("POST")
+	r.HandleFunc("/createcompanies", middleware.Auth(h.CreateCompanies)).Methods("POST")
 }

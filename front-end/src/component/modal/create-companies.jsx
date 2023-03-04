@@ -4,13 +4,10 @@ import { useMutation } from "react-query";
 import { API } from "../../config/api";
 import { useNavigate } from "react-router-dom";
 
-function ModalRegister({ showRegister, handleCloseRegister }) {
-  const navigate = useNavigate();
+function ModalCreateCompany({ showCreate, handleCloseCreate }) {
 
   const [form, setForm] = useState({
     name: "",
-    email: "",
-    password: "",
   });
 
   const handleChange = (e) => {
@@ -23,13 +20,13 @@ function ModalRegister({ showRegister, handleCloseRegister }) {
   const handleSubmit = useMutation(async (e) => {
     try {
       e.preventDefault();
-      const response = await API.post("/registration", form);
+      let formData = new FormData();
+        formData.set("name", form.name);
+      const response = await API.post("/createcompanies", formData);
 
       if (response.status === 200) {
-        setInterval(() => {
-          navigate(0);
-        }, 1000);
         alert("berhasil");
+        setForm({name: ""})
       } else {
         alert("gagal");
       }
@@ -41,8 +38,8 @@ function ModalRegister({ showRegister, handleCloseRegister }) {
   return (
     <>
       <Modal
-        show={showRegister}
-        onHide={handleCloseRegister}
+        show={showCreate}
+        onHide={handleCloseCreate}
         centered
         sizes="md"
       >
@@ -61,7 +58,7 @@ function ModalRegister({ showRegister, handleCloseRegister }) {
                 className="text-center fw-semibold pb-4 fs-1 "
                 closebutton
               >
-                Register
+                Create Companies
               </Modal.Title>
               <Form.Group
                 className="mb-3"
@@ -75,39 +72,13 @@ function ModalRegister({ showRegister, handleCloseRegister }) {
                   type="text"
                   className="shadow"
                   style={{ border: "none"}}
-                  placeholder="Your Name..."
+                  placeholder="Company Name..."
                   autoFocus
                   required
                 />
               </Form.Group>
-              <Form.Group className="mb-3" controlId="exampleForm.Controlform1">
-                <FormLabel>Email</FormLabel>
-                <Form.Control
-                  name="email"
-                  onChange={handleChange}
-                  value={form.email}
-                  type="email"
-                  className="shadow"
-                  style={{ border: "none"}}
-                  placeholder="name@example.com"
-                  required
-                />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="exampleForm.Controlform1">
-                <FormLabel>Password</FormLabel>
-                <Form.Control
-                  name="password"
-                  onChange={handleChange}
-                  value={form.password}
-                  type="password"
-                  className="shadow"
-                  style={{ border: "none"}}
-                  placeholder="*******"
-                  required
-                />
-              </Form.Group>
               <Button type="submit" className="btn-dark mt-3 w-100">
-                Register
+                Create
               </Button>
             </Form>
           </Modal.Body>
@@ -121,4 +92,4 @@ function ModalRegister({ showRegister, handleCloseRegister }) {
   );
 }
 
-export default ModalRegister;
+export default ModalCreateCompany;

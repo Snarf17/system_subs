@@ -12,7 +12,7 @@ export function PrivateAdmin() {
         ): state?.isLogin && state.user?.role === "admin" ? (
             <Outlet />
         ): (
-            state?.isLogin && state.user?.role === "user"  && <Navigate to='/' />
+            state?.isLogin && state.user?.role === "user" && <Navigate to='/' />
         )
         }
             {/* {state.isLogin !== false && state?.user?.role === "admin" ?  <Outlet/> : <Navigate to="/" />} */}
@@ -26,7 +26,7 @@ export function PrivateUser() {
         <>
             {!localStorage.getItem('token') ? (
             <Navigate to="/"/>
-        ): state?.isLogin && state.user?.role === "" ? (
+        ): state?.isLogin && state.user?.role === "user" ? (
             <Outlet />
         ): (
             <Navigate to='/' />

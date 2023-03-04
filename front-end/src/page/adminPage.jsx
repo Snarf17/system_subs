@@ -5,13 +5,11 @@ import { API } from "../config/api";
 
 function AdminPage() {
   const [data, setData] = useState([]);
-  console.log(data);
   async function getdata() {
     const response = await API.get("/companies");
     setData(response.data.data);
   }
-  //   const test = JSON.parse(data);
-  //   console.log(test);
+
   useEffect(() => {
     getdata();
   }, [data]);
